@@ -1,7 +1,11 @@
 console.log('sunt aici!');
 
-const API_BASE_URL = 'https:localhost:5000'
+const API_BASE_URL = 'http://localhost:5000'
 const productsContainer = document.getElementById('products')
+const addProductButton = document.getElementById('add-Product')
+const productNameInput = document.getElementById('name')
+const productPriceInput = document.getElementById('price')
+
 
 function displayData(data){
     const dataElement = document.createElement('pre')
@@ -16,7 +20,7 @@ async function getItems(){
     try{
         const response = await fetch(`${API_BASE_URL}/items`)
         console.log(response)
-        displayData(response)
+        await displayData(response.json())
     }
     catch(error){
         console.log(error)
@@ -24,4 +28,12 @@ async function getItems(){
 
 }
 
+function addProduct(){
+    let newProduct = {}
+    newProduct.name = productNameInput.value
+    newProduct.price = productPriceInput.value
+    console.log('I want to add this product: ', newProduct)
+}
+
+addProductButton.addEventListener('click', addProduct)
 getItems()
