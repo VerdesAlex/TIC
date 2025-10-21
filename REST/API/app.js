@@ -25,8 +25,23 @@ let nextId= 4;
 app.use(cors())
 app.use(express.json())
 
-app.get('/', (req, res) => {
+app.get('/items', (req, res) => {
     res.status(200).json(items)
+})
+
+app.post('/items', (req,res) =>{
+    const {name, price} = req.body
+    let newProduct = {}
+
+    newProduct.id = nextId++
+    newProduct.name = name
+    newProduct.price = price
+    
+    items.push(newProduct)
+
+    res.status(200).json({
+        id: newProduct.id //nu e ideal, ca trebuia sa arate 4, nu 5 cum face acum
+    })
 })
 
 app.listen(PORT, () => {

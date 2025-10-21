@@ -28,11 +28,27 @@ async function getItems(){
 
 }
 
-function addProduct(){
+async function addProduct(){
     let newProduct = {}
     newProduct.name = productNameInput.value
     newProduct.price = productPriceInput.value
     console.log('I want to add this product: ', newProduct)
+
+    try{
+        const response = await fetch(`${API_BASE_URL}/items`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(newProduct)
+        })
+        const data = await response.json()
+        console.log('The product has been added with the id: ', data)
+        displayData(await getItems())
+    }
+    catch(error){
+        console.log(error)
+    }
 }
 
 addProductButton.addEventListener('click', addProduct)
